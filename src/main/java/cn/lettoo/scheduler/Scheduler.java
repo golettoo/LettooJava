@@ -19,8 +19,6 @@ package cn.lettoo.scheduler;
 
 import java.util.List;
 import java.util.Vector;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 /**
  * A simple but still useful implementation of a Scheduler (in memory only).
@@ -34,8 +32,6 @@ import java.util.concurrent.Executors;
  */
 public class Scheduler extends Thread {
 
-    ExecutorService pool = Executors.newFixedThreadPool(10);
-    
     /**
      * Job list.
      */
@@ -231,9 +227,8 @@ public class Scheduler extends Thread {
      * @param job job to execute.
      */
     void executeInABox(final Job job) {
-        try {   
-            pool.execute(new JobRunner(job));
-            //job.execute();
+        try {
+            job.execute();
         } catch (Exception e) {
             System.err.println("The execution of the job threw an exception");
             e.printStackTrace(System.err);
@@ -263,20 +258,6 @@ public class Scheduler extends Thread {
         } catch (InterruptedException ie) {
             shutdown = true;
         }
-    }
-    
-    static final class JobRunner implements Runnable {
-
-        private Job job;
-
-        public JobRunner(Job job) {
-            this.job = job;
-        }
-
-        public void run() {
-            job.execute();
-        }
-
     }
 
     /**
