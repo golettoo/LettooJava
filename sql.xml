@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+
+<!DOCTYPE sql_template>
+<sqltemplate xmlns="cn.lettoo">
+	<sql name="Department.insert">
+		<content><![CDATA[
+		INSERT INTO DEPARTMENT(ID, NAME, DESCRIPTION) VALUES (?, ?, ?)
+		]]></content>
+	</sql>
+
+	<sql name="Department.delete">
+		<content><![CDATA[
+		DELETE FROM DEPARTMENT WHERE ID = ?
+		]]></content>
+	</sql>
+
+	<sql name="Department.update">
+		<content><![CDATA[
+		UPDATE DEPARTMENT SET NAME = ?, DESCRIPTION = ? WHERE ID = ?
+		]]></content>
+	</sql>
+
+	<sql name="Department.select">
+		<content><![CDATA[
+		SELECT ID, NAME, DESCRIPTION FROM DEPARTMENT WHERE ID = ?
+		]]></content>
+	</sql>
+	
+	<sql name="Department.clean">
+		<content><![CDATA[
+		DELETE FROM DEPARTMENT
+		]]></content>
+	</sql>
+	
+	<sql name="Employee.insert">
+		<content><![CDATA[
+		INSERT INTO EMPLOYEE(ID, NAME, DEPARTMENTID, DESCRIPTION) VALUES (?, ?, ?, ?)
+		]]></content>
+	</sql>
+	
+	<sql name="Employee.clean">
+		<content><![CDATA[
+		DELETE FROM EMPLOYEE
+		]]></content>
+	</sql>
+
+</sqltemplate>
