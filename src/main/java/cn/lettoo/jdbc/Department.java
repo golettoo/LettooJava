@@ -40,4 +40,14 @@ public class Department {
 	public void setEmployees(List<Employee> employees) {
 		this.employees = employees;
 	}
+	
+	@Override
+    public String toString() {
+	    StringBuffer sb = new StringBuffer();
+	    sb.append("id=" + this.id);
+	    sb.append("name=" + this.name);
+	    sb.append("description=" + this.description);
+	    
+	    return sb.toString();
+    }
 }

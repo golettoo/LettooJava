@@ -27,18 +27,47 @@ public class DepartmentDB {
 		}
 	}
 
-	// É¾
-	public void deleteDepartment(Connection conn, Department dept)
+	public void deleteDepartmentTrans(Connection conn, Department dept)
 	        throws SQLException {
-		PreparedStatement stmt = null;
+		try {			
+			conn.setAutoCommit(false);
+			this.deleteDepartment(conn, dept);
+			this.updateEmpDeptNull(conn, dept);
+			conn.commit();
+		} catch (SQLException e) {
+			conn.rollback();
+		}
+
+	}
+
+	private void deleteDepartment(Connection conn, Department dept)
+	        throws SQLException {
+		PreparedStatement stmt = null;		
 		try {
 			String sql = SqlParser.getInstance().getSql("Department.delete");
 			stmt = conn.prepareStatement(sql);
 			stmt.setInt(1, dept.getId());
 			stmt.execute();
+
 		} finally {
 			DBUtil.close(stmt);
-			DBUtil.close(conn);
+			//DBUtil.close(conn);
+		}
+	}
+
+	private void updateEmpDeptNull(Connection conn, Department dept)
+	        throws SQLException {
+		PreparedStatement stmt = null;
+		try {
+			String sql = SqlParser.getInstance().getSql(
+			        "Employee.departmentisnull");
+			stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, dept.getId());
+			stmt.execute();
+
+		} finally {
+			DBUtil.close(stmt);
+			//DBUtil.close(conn);
 		}
 	}
 
@@ -86,13 +115,13 @@ public class DepartmentDB {
 			DBUtil.close(conn);
 		}
 	}
-	
+
 	public void cleanDepartment(Connection conn) throws SQLException {
 		PreparedStatement stmt = null;
 		try {
 			// SqlParser¶ÁÈ¡sql.xmlÎÄ¼þ
 			String sql = SqlParser.getInstance().getSql("Department.clean");
-			stmt = conn.prepareStatement(sql);			
+			stmt = conn.prepareStatement(sql);
 			stmt.execute();
 		} finally {
 			DBUtil.close(stmt);

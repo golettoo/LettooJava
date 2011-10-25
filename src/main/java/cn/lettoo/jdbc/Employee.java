@@ -41,4 +41,15 @@ public class Employee {
 	public void setDescription(String description) {
 		this.description = description;
 	}
+
+	@Override
+    public String toString() {
+	    StringBuffer sb = new StringBuffer();
+	    sb.append("id=" + this.id);
+	    sb.append("name=" + this.name);
+	    sb.append("department=" + this.department);
+	    sb.append("description=" + this.description);
+	    
+	    return sb.toString();
+    }
 }

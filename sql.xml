@@ -43,5 +43,18 @@
 		DELETE FROM EMPLOYEE
 		]]></content>
 	</sql>
+	
+	<sql name="Employee.departmentisnull">
+		<content><![CDATA[
+		UPDATE EMPLOYEE SET DEPARTMENTID = NULL WHERE DEPARTMENTID = ?
+		]]></content>
+	</sql>
+	
+	<sql name="Employee.test">
+		<content><![CDATA[
+		select Employee.id, Employee.name, Department.id as "department.id" , Department.name as "department.name"
+		from Employee inner join Department on Employee.departmentId=Department.id where Employee.id=?
+		]]></content>
+	</sql>
 
 </sqltemplate>
