@@ -7,11 +7,13 @@
 		destroy-method="close">
 		<property name="driverClassName" value="org.sqlite.JDBC" />
 		<property name="url" value="jdbc:sqlite:test.db" />
-		<!-- <property name="username" value="${jdbc.username}" />
-		<property name="password" value="${jdbc.password}" /> -->
-		<property name="testOnBorrow" value="true" />
-		<property name="testWhileIdle" value="true" />
-		<property name="defaultAutoCommit" value="false"/>
-		<property name="validationQuery" value="select 1 from DEPARTMENT" />
+	</bean>
+	
+	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+	    <property name="dataSource" ref="dataSource" />
+	</bean>
+	
+	<bean id="employeeDao" class="cn.lettoo.spring.jdbc.EmployeeDao">
+	    <property name="jdbcTemplate" ref="jdbcTemplate" />
 	</bean>
 </beans>
